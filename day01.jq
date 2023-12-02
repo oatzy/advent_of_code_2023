@@ -12,7 +12,4 @@ def sub_numbers: ( . |
     gsub("nine"; "nine9nine")
 );
 
-def firstd: . | capture("[a-z]*(?<a>[0-9]).*") | .a | tonumber;
-def lastd: . | capture(".*(?<a>[0-9])[a-z]*") | .a | tonumber;
-
-[inputs | [., sub_numbers]] | transpose | map( map(10 * firstd + lastd) | add )
+[inputs | [., sub_numbers]] | transpose | map( map( [scan("\\d") | tonumber] | 10 * .[0] + .[-1] ) | add )
