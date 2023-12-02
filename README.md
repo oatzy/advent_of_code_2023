@@ -3,5 +3,5 @@
 ```
 chmod +x *.jq
 
-./day01-part1.jq < inputs/day01.txt
+./day01.jq < inputs/day01.txt
 ```
