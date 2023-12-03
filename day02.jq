@@ -7,9 +7,10 @@ def power: ([.[].red] | max) * ([.[].green] | max) * ([.[].blue] | max);
 capture("Game (?<n>\\d+): (?<r>.+)") | [
   ( .n | tonumber ), 
   ( .r | split("; ") | map( 
-    split(", ") | map( split(" ") | {key: .[1], value: .[0] | tonumber} ) | from_entries
+    split(", ") | map( split(" ") | { key: .[1], value: .[0] | tonumber } ) | from_entries
   ))
 ] | [
-  ( .[0] * ( if ( .[1] | map(possible) | all ) then 1 else 0 end ) ), 
+  ( if ( .[1] | map(possible) | all ) then .[0] else 0 end ), 
   ( .[1] | power )
-] ] | transpose | map(add)
+]
+] | transpose | map(add)
