@@ -9,7 +9,7 @@ def fold:
 
 [
   inputs | split(": ")[1] | [
-    split(" ") | map(try tonumber) | group_by(.)[] | select(length | . > 1)
+    split(" ") | map(tonumber?) | group_by(.)[] | select(length | . > 1)
   ] | length
 ] | [
   ( map(. - 1 | exp2 | floor) | add ),
