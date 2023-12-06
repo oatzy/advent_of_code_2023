@@ -10,4 +10,4 @@ def wins:
 ]] | transpose | 
   map(wins) |
     (reduce .[:-1][] as $i (1; .*$i)), 
-    .[-1]
+    last
