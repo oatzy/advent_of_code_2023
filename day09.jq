@@ -2,14 +2,11 @@
 
 def delta: [.[:-1], .[1:]] | transpose | map(.[1] - .[0]);
 
-def next:
+def extend:
   def r:
-    if all(. == 0) then 0 else .[-1] + (delta | r) end;
+    if all(. == 0) then [0, 0] else 
+      ( delta | r ) as $d | [.[-1] + $d[0], .[0] - $d[1]]
+    end;
   r;
 
-def prev:
-  def r:
-    if all(. == 0) then 0 else .[0] - (delta | r) end;
-  r;
-
-[ inputs | split(" ") | map(tonumber) | [next, prev] ] | transpose | map(add)
+[ inputs | split(" ") | map(tonumber) | extend ] | transpose | map(add)
