@@ -1,11 +1,10 @@
 #!/usr/bin/env -S jq -Rnf
 
 def accumulate:
-  def r:
-    if isempty(.[]) then 0 else 
-        .[0] as $f | $f[1] + ( .[1: 1 + $f[0]] |= map([.[0], .[1] + $f[1]]) | .[1:] | r ) 
-    end;
-  r;
+  if isempty(.[]) then 0 else 
+    .[0] as $f | 
+    $f[1] + ( .[1: 1 + $f[0]] |= map([.[0], .[1] + $f[1]]) | .[1:] | accumulate ) 
+  end;
 
 [
   inputs | split(": ")[1] | [
